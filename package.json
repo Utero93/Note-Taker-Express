@@ -10,6 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
+    "express-handlebars": "^7.1.2",
     "inquirer": "^8.2.6"
   }
 }
