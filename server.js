@@ -14,6 +14,7 @@ const app = express();
 // Parsing middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false })); // parse incoming requests w/URL-encoded payloads to handle form data. 
+
 // Configuring middleware
 app.use(express.static("public")); // Serves static files from "public" directory
 
