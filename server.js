@@ -1,42 +1,27 @@
-// import the routes
+// Import express
 const express = require('express');
-const path = require('path');
 
+// Import routes
+const htmlRoutes = require('./routes/htmlRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
-// const routes = require('./routes/index'); // this works too
-const routes = require('./routes'); // defaults to index
+// Setting the PORT
+const PORT = process.env.PORT || 3001; 
 
-// Helper functions for reading and writing to the JSON file
-// const { readFromFile, readAndAppend } = require('./helpers/fsUtils');
-
-// Helper method for generating unique ids
-const uuid = require('./helpers/uuid');
-
-const PORT = 3001;
-
+// Create an instance of express app
 const app = express();
 
-// Middleware for parsing JSON and urlencoded form data
+// Parsing middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: false })); // parse incoming requests w/URL-encoded payloads to handle form data. 
+// Configuring middleware
+app.use(express.static("public")); // Serves static files from "public" directory
 
-app.use(express.static('public'));
+// Using modularized html and Api routes
+app.use(htmlRoutes);
+app.use(apiRoutes); 
 
-// apply middleware to use /api
-app.use('/api', routes);
-
-// GET Route for homepage
-app.get('/', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/index.html'))
-);
-
-// GET Route for feedback page
-app.get('/feedback', (req, res) =>
-  res.sendFile(path.join(__dirname, '/public/pages/feedback.html'))
-);
-
-
-
-app.listen(PORT, () =>
-  console.log(`App listening at http://localhost:${PORT}`)
-);
+// Starting the server
+app.listen(PORT, () => {
+  console.log(`Server running on http://localhost:${PORT}`); // cb function executed once the server successfully starts.
+});
