@@ -1,28 +1,22 @@
-// Import express
-const express = require('express');
-
-// Import routes
-const htmlRoutes = require('./routes/htmlRoutes');
-const apiRoutes = require('./routes/apiRoutes');
-
-// Setting the PORT
-const PORT = process.env.PORT || 3001; 
-
-// Create an instance of express app
+const express = require("express");
+const PORT = process.env.PORT || 80;
 const app = express();
 
-// Parsing middleware
+// middleware for json data
 app.use(express.json());
-app.use(express.urlencoded({ extended: false })); // parse incoming requests w/URL-encoded payloads to handle form data. 
+// middleware for url encoded data utf-8
+app.use(express.urlencoded({ extended: true }));
+// middleware for serving static files from the public folder
+app.use(express.static("public"));
 
-// Configuring middleware
-app.use(express.static("public")); // Serves static files from "public" directory
+const apiRouter = require("./routes/apiRoutes");
+const htmlRouter = require("./routes/htmlRoutes");
 
-// Using modularized html and Api routes
-app.use(htmlRoutes);
-app.use(apiRoutes); 
+// apiRouter paths will always start with '/api'
+app.use("/api", apiRouter);
+// hmltRouter routes will start with '/'
+app.use("/", htmlRouter);
 
-// Starting the server
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`); // cb function executed once the server successfully starts.
-});
+app.listen(PORT, () =>
+  console.log(`App listening at http://localhost:${PORT}`)
+);

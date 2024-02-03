@@ -1,26 +1,17 @@
-// Import Dependencies 
-const express = require('express');
-const router = express.Router();
-const path = require('path');
+// imported modules and packages
+const express = require("express");
+const path = require("path");
+const htmlRoute = express.Router();
 
-// Defines the route that serves 'index.html' the root path ('/)
-router.get('/', (req, res) => {
-
-    const indexPath = path.join(__dirname, '../public/index.html');
-    // this will serve the index.html "public" directory
-    res.sendFile(indexPath);
-
+console.log(__dirname)
+// routes the notes.html in the public folder to the /notes path
+htmlRoute.get("/notes", (req, res) => {
+  res.sendFile(path.join(__dirname, "..", "public", "notes.html"));
 });
 
-// Defining route to serve 'notes.html' from the '/notes' path
-router.get('/notes', (req, res) => {
-
-    const notesPath = path.join(__dirname, '../public/notes.html');
-    // serves notes.html from "public" directory
-    res.sendFile(notesPath); 
-
-
+// routes the index.html as the default page
+htmlRoute.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
 });
 
-// Exporting the router
-module.exports = router;
+module.exports = htmlRoute;
