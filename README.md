@@ -57,7 +57,7 @@ THEN I am presented with empty fields to enter a new note title and the note’s
 
 ## Installation:
 ```md
-No installation necessary.  Simply visit the application's deployed like [here]
+No installation necessary. Simply visit the application's deployed link [here] (https://notetaker-exp-58897a6da757.herokuapp.com/)
 ```
 
 ## Running Application
